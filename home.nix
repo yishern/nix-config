@@ -19,4 +19,27 @@
       init.defaultBranch = "main";
     };
   };
+  
+  programs.tmux = {
+    enable = true;
+    terminal = "screen-256color";
+    escapeTime = 1;
+    historyLimit = 10000;
+    clock24 = true;
+    keyMode = "vi";
+    aggressiveResize = true;
+  };
+
+  home.file = {
+    tmux = {
+      source = ./config/tmux/tmux.conf;
+      target = ".tmux.conf";
+      recursive = true;
+    };
+    tmuxlocal = {
+      source = ./config/tmux/tmux.conf.local;
+      target = ".tmux.conf.local";
+      recursive = true;
+    };
+  };
 }
