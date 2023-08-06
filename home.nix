@@ -127,4 +127,63 @@
       export PATH="$HOME/.local/bin:$PATH"
     '';
   };
+
+  programs.alacritty = {
+    enable=true;
+    package =pkgs.alacritty;
+    settings = {
+      live_config_reload = true;
+
+      # Window.
+      dynamic_title = true;
+      window.padding = {
+        x = 0;
+        y = 0;
+      };
+      window.decorations = "buttonless";
+
+      font = {
+        size = 13.0;
+        offset.y = 2;
+        normal = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Regular";
+        };
+        bold = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Bold";
+        };
+        italic = {
+          family = "JetBrainsMono Nerd Font";
+          style = "Italic";
+        };
+      };
+      draw_bold_text_with_bright_colors = true;
+      key_bindings = let tmux = "${lib.getBin pkgs.tmux}/bin/tmux"; in [
+        # Alt+Left and Right to skip words.
+        { key = "Right"; mods = "Alt"; chars = "\\x1bf"; }
+        { key = "Left";  mods = "Alt"; chars = "\\x1bb"; }
+
+        # tmux
+        { key = "LBracket"; mods = "Command|Shift"; 
+          command = { program = tmux; args = ["previous-window"]; }; 
+        }
+        { key = "RBracket"; mods = "Command|Shift";
+          command = { program = tmux; args = ["next-window"]; }; 
+        }
+        { key = "LBracket"; mods = "Command"; 
+          command = { program = tmux; args = ["select-pane" "-L"]; }; 
+        }
+        { key = "RBracket"; mods = "Command";
+          command = { program = tmux; args = ["select-pane" "-R"]; }; 
+        }
+        { key = "T"; mods = "Command";
+          command = { program = tmux; args = ["new-window"]; }; 
+        }
+        { key = "Return"; mods = "Command|Shift";
+          command = { program = tmux; args = ["resize-pane" "-Z"]; }; 
+        }
+      ];
+    };
+  };
 }
