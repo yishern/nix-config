@@ -10,4 +10,13 @@
   home.packages = with pkgs; [
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
+
+  programs.git = {
+    enable = true;
+    userName = "yishern";
+    userEmail = "44721502+yishern@users.noreply.github.com";
+    extraConfig = {
+      init.defaultBranch = "main";
+    };
+  };
 }
