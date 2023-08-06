@@ -11,6 +11,15 @@
     (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
   ];
 
+  programs.neovim = {
+    enable = true;
+    vimAlias = true;
+    plugins = with pkgs.vimPlugins; [
+      lazy-nvim
+    ];
+  };
+  xdg.configFile."nvim/init.lua".source = ./config/nvim/init.lua;
+
   programs.git = {
     enable = true;
     userName = "yishern";
